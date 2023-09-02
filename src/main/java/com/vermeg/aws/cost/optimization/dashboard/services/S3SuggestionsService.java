@@ -6,10 +6,7 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.redshift.model.BucketNotFoundException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.BucketLifecycleConfiguration;
-import com.amazonaws.services.s3.model.GetBucketLifecycleConfigurationRequest;
-import com.amazonaws.services.s3.model.ObjectListing;
-import com.amazonaws.services.s3.model.S3ObjectSummary;
+import com.amazonaws.services.s3.model.*;
 import com.vermeg.aws.cost.optimization.dashboard.entities.*;
 import com.vermeg.aws.cost.optimization.dashboard.repositories.S3ObjectOptimizationSuggestionRepository;
 import com.vermeg.aws.cost.optimization.dashboard.repositories.S3OptimizationSuggestionRepository;
@@ -206,4 +203,16 @@ public class S3SuggestionsService {
 
         return s3OptimizationSuggestionRepository.saveAll(suggestions);
     }
+
+    public static boolean isCrossRegionReplicationEnabled(AmazonS3 s3Client, String bucketName) {
+        GetBucketReplicationConfigurationRequest request = new GetBucketReplicationConfigurationRequest(bucketName);
+        try {
+            BucketReplicationConfiguration replicationConfig = s3Client.getBucketReplicationConfiguration(request);
+            return replicationConfig != null && !replicationConfig.getRules().isEmpty();
+        } catch (Exception e) {
+            // Handle exceptions if the bucket doesn't have replication or if an error occurs
+            return false;
+        }
+    }
 }
+

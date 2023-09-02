@@ -310,4 +310,25 @@ public class ComputeSuggestionsService {
             }
         }
     }
+
+    public void generateVolumeGenSuggestions(){
+        List<EBSVolume> ebsVolumes = this.ec2Service.getAllVolumes();
+        List<EBSOptimizationSuggestion> genSuggestions = new ArrayList<>();
+        for ( EBSVolume volume : ebsVolumes) {
+            if (volume.getVolumeType().equals("gp2")){
+                genSuggestions.add(EBSOptimizationSuggestion.builder()
+                        .createdDate(new Date())
+                        .associatedAccount(volume.getAssociatedAccount())
+                        .status(SuggestionStatus.Pending)
+                        .category(EBSSuggestionCategory.OLDERGENERATION)
+                        .title("Volume with ID " + volume.getVolumeId() + " is using an older generation.")
+                        .description("The following volume is using gp2 volumes which are of an older generation.")
+                        .recommendation("consider passing to the newer gp3 generation.")
+                        .linkedVolume(volume)
+                        .build()
+                );
+            }
+        }
+        ebsOptimizationSuggestionRepository.saveAll(genSuggestions);
+    }
 }

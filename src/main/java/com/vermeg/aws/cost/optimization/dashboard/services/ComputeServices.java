@@ -53,7 +53,7 @@ public class ComputeServices {
                             .platform(instance.getPlatformDetails())
                             .region(instance.getPlacement().getAvailabilityZone().substring(0, instance.getPlacement().getAvailabilityZone().length() - 1))
                             .state(instance.getState().getName())
-                            .monitoring(instance.getMonitoring().getState().toLowerCase())
+                            .monitoring(instance.getMonitoring().getState())
                             .publicIp(instance.getPublicIpAddress())
                             .privateIp(instance.getPrivateIpAddress())
                             .tags(instance.getTags().stream().collect(Collectors.toMap(Tag::getKey, Tag::getValue)))
