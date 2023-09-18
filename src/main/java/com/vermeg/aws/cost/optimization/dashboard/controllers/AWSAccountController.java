@@ -2,7 +2,10 @@ package com.vermeg.aws.cost.optimization.dashboard.controllers;
 
 import com.vermeg.aws.cost.optimization.dashboard.entities.AwsAccountCredentials;
 import com.vermeg.aws.cost.optimization.dashboard.services.AwsCredentialsService;
+import com.vermeg.aws.cost.optimization.dashboard.services.DataStorageService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,9 +13,11 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @CrossOrigin("*")
+@Slf4j
 public class AWSAccountController {
 
     private final AwsCredentialsService awsService;
+    private final DataStorageService dataStorageService;
 
     @PostMapping("add-account-credentials")
     public AwsAccountCredentials addCredentials(@RequestBody AwsAccountCredentials credentials) {
@@ -40,4 +45,19 @@ public class AWSAccountController {
         return this.awsService.getAllAwsCredentials();
     }
 
+    @PostMapping("/refresh-data")
+    public ResponseEntity<String> storeDataUponAccountAddCall() {
+        return ResponseEntity.ok(this.storeDataUponAccountAdd());
+    }
+
+    public String storeDataUponAccountAdd() {
+        log.info("AWS Account added, updating data storage .....");
+        dataStorageService.storeEbsVolumes();
+        dataStorageService.storeEipAddresses();
+        dataStorageService.storeEc2Instances();
+        dataStorageService.storeRdsInstances();
+        dataStorageService.storeS3Buckets();
+        log.info("Data storage updated");
+        return "Account Data stored";
+    }
 }

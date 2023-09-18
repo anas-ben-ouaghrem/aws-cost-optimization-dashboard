@@ -15,7 +15,7 @@ public class CredentialsAspects {
 
     private final DataStorageService dataStorageService;
 
-    @After("execution(* com.vermeg.aws.cost.optimization.dashboard.services.AwsCredentialsService.createCredentials(..))"+ "|| execution(* com.vermeg.aws.cost.optimization.dashboard.services.AwsCredentialsService.updateCredentials(..))")
+  /*  @After("execution(* com.vermeg.aws.cost.optimization.dashboard.services.AwsCredentialsService.createCredentials(..))"+ "|| execution(* com.vermeg.aws.cost.optimization.dashboard.services.AwsCredentialsService.updateCredentials(..))")
     public void afterAdvice() throws Exception {
         log.info("Credentials update api call detected, updating data storage .....");
         dataStorageService.storeEbsVolumes();
@@ -24,6 +24,6 @@ public class CredentialsAspects {
         dataStorageService.storeRdsInstances();
         dataStorageService.storeS3Buckets();
         log.info("Data storage updated");
-    }
+    }*/
 
 }
