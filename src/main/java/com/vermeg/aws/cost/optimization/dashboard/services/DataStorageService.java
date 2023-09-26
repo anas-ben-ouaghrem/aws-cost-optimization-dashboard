@@ -89,7 +89,7 @@ public class DataStorageService {
         this.addInstances(instancesToAdd);
         this.updateInstances(instancesToUpdateInDB, instancesToUpdate);
 
-        this.storeEc2Backup(ec2InstanceRepository.findAll());
+        //this.storeEc2Backup(ec2InstanceRepository.findAll());
 
         log.info("EC2 Instances stored");
     }
@@ -110,7 +110,7 @@ public class DataStorageService {
             instance.setPrivateIp(instanceDTO.getPrivateIp());
             instance.setAssociatedAccount(credentialsService.getCredentialsByAccountId(instanceDTO.getAssociatedAccount()));
         }
-        this.ec2InstanceRepository.saveAllAndFlush(instancesToUpdate);
+        this.ec2InstanceRepository.saveAll(instancesToUpdate);
     }
 
     private void addInstances(List<Ec2DTO> instancesToAdd) {
@@ -135,7 +135,7 @@ public class DataStorageService {
                     .lastUptimeTimestamp(null)
 
                     .build();
-            this.ec2InstanceRepository.saveAndFlush(ec2Instance);
+            this.ec2InstanceRepository.save(ec2Instance);
         }
     }
 
@@ -186,7 +186,7 @@ public class DataStorageService {
         this.addRdsInstances(instancesToAdd);
         this.updateRdsInstances(instancesToUpdateInDB, currentInstances);
 
-        this.storeRdsBackup(rdsInstanceRepository.findAll());
+        //this.storeRdsBackup(rdsInstanceRepository.findAll());
 
         log.info("RDS Instances stored");
     }
@@ -209,7 +209,7 @@ public class DataStorageService {
             instance.setCreationDate(LocalDateTime.ofInstant(instanceDTO.getCreationDate().toInstant(), ZoneId.systemDefault()));
             instance.setRegion(instanceDTO.getRegion());
         }
-        this.rdsInstanceRepository.saveAllAndFlush(instancesToUpdateInDB);
+        this.rdsInstanceRepository.saveAll(instancesToUpdateInDB);
     }
 
     private void addRdsInstances(List<RdsDTO> instancesToAdd) {
@@ -233,7 +233,7 @@ public class DataStorageService {
                     .creationTimestamp(LocalDateTime.now())
                     .lastUpdateTimestamp(LocalDateTime.now())
                     .build();
-            this.rdsInstanceRepository.saveAndFlush(rdsInstance);
+            this.rdsInstanceRepository.save(rdsInstance);
         }
     }
 
@@ -284,7 +284,7 @@ public class DataStorageService {
         this.addEipAddresses(addressesToAdd);
         this.updateEipAddresses(addressesToUpdateInDb, currentAddresses);
 
-        this.storeEipBackup(eipAddressRepository.findAll());
+        //this.storeEipBackup(eipAddressRepository.findAll());
 
         log.info("EIP Addresses stored");
     }
@@ -298,7 +298,7 @@ public class DataStorageService {
             address.setAssociationId(addressDTO.getAssociationId());
             address.setAssociatedAccount(credentialsService.getCredentialsByAccountId(addressDTO.getAssociatedAccount()));
         }
-        this.eipAddressRepository.saveAllAndFlush(addressesToUpdateInDb);
+        this.eipAddressRepository.saveAll(addressesToUpdateInDb);
     }
 
     private void addEipAddresses(List<EipDTO> addressesToAdd) {
@@ -310,7 +310,7 @@ public class DataStorageService {
                     .associationId(address.getAssociationId())
                     .associatedAccount(credentialsService.getCredentialsByAccountId(address.getAssociatedAccount()))
                     .build();
-            this.eipAddressRepository.saveAndFlush(eipAddress);
+            this.eipAddressRepository.save(eipAddress);
         }
     }
 
@@ -361,7 +361,7 @@ public class DataStorageService {
         this.addEbsVolumes(volumesToAdd);
         this.updateEbsVolumes(volumesToUpdateInDb, currentVolumes);
 
-        this.storeEbsBackup(ebsVolumeRepository.findAll());
+        //this.storeEbsBackup(ebsVolumeRepository.findAll());
 
         log.info("EBS Volumes stored");
 
@@ -380,7 +380,7 @@ public class DataStorageService {
             volume.setOperationHours(volumeDTO.getTags().get(OPERATION_HOURS));
             volume.setAssociatedAccount(credentialsService.getCredentialsByAccountId(volumeDTO.getAssociatedAccount()));
         }
-        this.ebsVolumeRepository.saveAllAndFlush(volumesToUpdateInDb);
+        this.ebsVolumeRepository.saveAll(volumesToUpdateInDb);
     }
 
     private void addEbsVolumes(List<EbsDTO> volumesToAdd) {
@@ -400,7 +400,7 @@ public class DataStorageService {
                     .lastUpdateTimestamp(LocalDateTime.now())
                     .creationTimestamp(LocalDateTime.now())
                     .build();
-            this.ebsVolumeRepository.saveAndFlush(ebsVolume);
+            this.ebsVolumeRepository.save(ebsVolume);
         }
     }
 

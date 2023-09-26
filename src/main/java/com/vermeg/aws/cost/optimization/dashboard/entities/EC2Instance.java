@@ -84,7 +84,7 @@ public class EC2Instance {
     @Column(name = "last_uptime_timestamp", nullable = true)
     private LocalDateTime lastUptimeTimestamp;
 
-    @OneToMany(mappedBy = "linkedInstance", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "linkedInstance", fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     @JsonIgnore
     private Set<EC2OptimizationSuggestion> linkedSuggestion;
 

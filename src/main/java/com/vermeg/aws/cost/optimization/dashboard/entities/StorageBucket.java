@@ -69,7 +69,7 @@ public class StorageBucket {
 
     // Relations
 
-    @OneToMany(mappedBy = "linkedBucket", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "linkedBucket", cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<S3OptimizationSuggestion> suggestions;
 

@@ -48,7 +48,7 @@ public class EIPAddress  {
 
     //Relations
 
-    @OneToMany(mappedBy = "linkedIPAddress", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "linkedIPAddress", cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<EIPOptimizationSuggestion> linkedSuggestion;
 

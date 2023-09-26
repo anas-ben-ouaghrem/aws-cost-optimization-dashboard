@@ -93,7 +93,7 @@ public class RDSInstance  {
 
     // Relations
 
-    @OneToMany(mappedBy = "linkedInstance", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "linkedInstance", fetch = FetchType.LAZY, cascade ={CascadeType.REMOVE, CascadeType.PERSIST})
     @JsonIgnore
     private Set<RDSOptimizationSuggestion> linkedSuggestion;
 

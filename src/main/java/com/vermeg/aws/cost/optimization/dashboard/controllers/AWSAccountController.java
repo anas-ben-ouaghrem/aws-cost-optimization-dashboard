@@ -12,6 +12,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
+@RequestMapping("/api/v1/management/aws")
 @CrossOrigin("*")
 @Slf4j
 public class AWSAccountController {
@@ -19,28 +20,28 @@ public class AWSAccountController {
     private final AwsCredentialsService awsService;
     private final DataStorageService dataStorageService;
 
-    @PostMapping("add-account-credentials")
+    @PostMapping("/add-account-credentials")
     public AwsAccountCredentials addCredentials(@RequestBody AwsAccountCredentials credentials) {
         return this.awsService.createCredentials(credentials);
     }
 
-    @PutMapping("update-account-credentials")
+    @PutMapping("/update-account-credentials")
     public AwsAccountCredentials updateCredentials(Long credentialsId, String name, String accessKeyId, String secretAccessKey){
         return this.awsService.updateCredentials(credentialsId,name,accessKeyId,secretAccessKey);
     }
 
-    @DeleteMapping("delete-account-credentials/{credentialsId}")
+    @DeleteMapping("/delete-account-credentials/{credentialsId}")
     public void deleteCredentials(@PathVariable Long credentialsId){
         this.awsService.deleteCredentials(credentialsId);
     }
 
 
-    @GetMapping("get-account-credentials/{name}")
+    @GetMapping("/get-account-credentials/{name}")
     public AwsAccountCredentials getCredentialsByName(@PathVariable String name){
         return this.awsService.getCredentialsByName(name);
     }
 
-    @GetMapping("get-account-credentials")
+    @GetMapping("/get-account-credentials")
     public List<AwsAccountCredentials> getCredentials(){
         return this.awsService.getAllAwsCredentials();
     }

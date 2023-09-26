@@ -75,7 +75,7 @@ public class EBSVolume {
 
     // Relations
 
-    @OneToMany(mappedBy = "linkedVolume", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "linkedVolume", fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     @JsonIgnore
     private Set<EBSOptimizationSuggestion> suggestions;
 
